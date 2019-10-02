@@ -1,0 +1,60 @@
+version: '3'
+services:
+  apache:
+    build: .docker/apache
+    container_name: apache
+    ports:
+      - 80:80
+    volumes:
+      - .docker/config/vhosts:/etc/apache2/sites-enabled
+      - .docker/config/certs:/etc/apache2/ssl
+      - ./app/:/home/wwwroot/app
+    depends_on:
+      - php
+
+  mysql:
+    image: mysql
+    command: "--default-authentication-plugin=mysql_native_password"
+    container_name: mysql
+    ports:
+      - 3306:33060
+    volumes:
+      - .docker/data/db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: imgix
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+
+  php:
+    build: .docker/php
+    container_name: php
+    volumes:
+      - ./app/:/home/wwwroot/app
+    depends_on:
+      - mysql
+      - rabbit
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - 8080:80
+    links:
+      - mysql
+
+  rabbit:
+    image: bitnami/rabbitmq
+    container_name: rabbit
+    environment:
+      - RABBITMQ_USERNAME=root
+      - RABBITMQ_PASSWORD=root
+      - RABBITMQ_NODETYPE=queue-ram
+    ports:
+      - 15672:15672
+    volumes:
+      - .docker/rabbitmq/definitions.json:/opt/definitions.json
+      - .docker/rabbitmq/rabbitmq.config:/opt/bitnami/rabbitmq/etc/rabbitmq/rabbitmq.config

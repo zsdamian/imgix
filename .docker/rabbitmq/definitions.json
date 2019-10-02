@@ -1,0 +1,40 @@
+{
+  "rabbit_version": "3.6.5",
+  "queues": [
+    {
+      "name": "upload-image",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "source": "amq.direct",
+      "vhost": "/",
+      "destination": "upload-image",
+      "destination_type": "queue",
+      "routing_key": "upload-image",
+      "arguments": {}
+    },
+    {
+      "source": "amq.direct",
+      "vhost": "/",
+      "destination": "process-image-success",
+      "destination_type": "queue",
+      "routing_key": "process-image-success",
+      "arguments": {}
+    },
+    {
+      "source": "amq.direct",
+      "vhost": "/",
+      "destination": "process-image-failure",
+      "destination_type": "queue",
+      "routing_key": "process-image-failure",
+      "arguments": {}
+    }
+  ]
+}

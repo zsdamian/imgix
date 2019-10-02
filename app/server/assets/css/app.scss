@@ -1,0 +1,49 @@
+@import "~bootstrap";
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+
+@font-face {
+  font-family: 'Roboto';
+}
+
+$color-primary: #FFAA00;
+$color-font: #666;
+$color-font-secondary: #AAA;
+$navbar-font-size: 24px;
+$menu-font-size: 32px;
+
+a {
+  &:hover{
+    color: $color-font;
+    text-decoration: none !important;
+  }
+}
+
+.nav-link {
+  @extend .nav-link;
+  color: $color-font;
+  font-size: $navbar-font-size;
+
+  &:hover{
+    color: $color-font;
+  }
+}
+
+.navbar-text {
+  @extend .navbar-text;
+  color: $color-font-secondary;
+}
+
+.imgix-menu-item {
+  background-color: $color-primary;
+  padding: 30% 10% 30% 10%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: $menu-font-size;
+  color: $color-font;
+  box-shadow: 0 0 5px $color-primary;
+  text-align: center;
+
+  &:hover{
+    box-shadow: 0 0 50px $color-primary;
+  }
+}

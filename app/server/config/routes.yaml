@@ -1,0 +1,11 @@
+index:
+    path: /{any}
+    defaults: { any: null }
+    methods: [GET]
+    controller: Imgix\Controller\MainController
+
+api_image_sepia:
+    path: /api/v1/image/sepia
+    methods: [POST]
+    defaults: { any: null }
+    controller: Imgix\Controller\API\SepiaController
