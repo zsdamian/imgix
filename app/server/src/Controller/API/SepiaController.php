@@ -2,6 +2,8 @@
 
 namespace Imgix\Controller\API;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Imgix\Entity\Download;
 use Imgix\File\Handler\FileHandlerInterface;
 use Imgix\File\TokenGenerator\DownloadTokenGenerator;
 use Imgix\Form\SepiaForm;
@@ -28,18 +30,22 @@ class SepiaController
     /** @var DownloadTokenGenerator */
     private $downloadTokenGenerator;
 
+    /** @var EntityManagerInterface */
+    private $entityManager;
 
     public function __construct(
         ProducerInterface $rabbitProducerUploadImage,
         FormFactoryInterface $formFactory,
         FileHandlerInterface $fileHandler,
-        DownloadTokenGenerator $downloadTokenGenerator
+        DownloadTokenGenerator $downloadTokenGenerator,
+        EntityManagerInterface $entityManager
     )
     {
         $this->rabbitProducerUploadImage = $rabbitProducerUploadImage;
         $this->formFactory = $formFactory;
         $this->fileHandler = $fileHandler;
         $this->downloadTokenGenerator = $downloadTokenGenerator;
+        $this->entityManager = $entityManager;
     }
 
 
@@ -56,6 +62,11 @@ class SepiaController
                     $sepiaDTO->getFile()
                 )
             );
+
+            $download = new Download();
+            $download->setToken($downloadToken);
+            $this->entityManager->persist($download);
+            $this->entityManager->flush();
 
             $this->rabbitProducerUploadImage->publish(json_encode([
                 'file' => $sepiaDTO->getFile() ? $sepiaDTO->getFile()->getRealPath() : null,

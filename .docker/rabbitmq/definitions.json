@@ -1,8 +1,67 @@
 {
   "rabbit_version": "3.6.5",
+  "users": [
+    {
+      "name": "root",
+      "password_hash": "LypL76Pp4rdWQnG1TbSN58E5Z/oAQ7On1rGGpZ35LU5oiKli",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    },
+    {
+      "name":"socket",
+      "password_hash":"RlijfwFx7Q0mSEqOlBdMLv6IhOfIpe0O8K1PCk9cXdB4CBJb",
+      "hashing_algorithm":"rabbit_password_hashing_sha256",
+      "tags":""
+    }
+  ],
+  "permissions": [
+    {
+      "user": "root",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "socket",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "global_parameters": [
+    {
+      "name": "cluster_name",
+      "value": "rabbit@52d78eb6b054"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
   "queues": [
     {
       "name": "upload-image",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      }
+    },
+    {
+      "name": "image-ready-backend",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      }
+    },
+    {
+      "name": "image-ready-socket",
       "vhost": "/",
       "durable": true,
       "auto_delete": false,
@@ -23,17 +82,17 @@
     {
       "source": "amq.direct",
       "vhost": "/",
-      "destination": "process-image-success",
+      "destination": "image-ready-backend",
       "destination_type": "queue",
-      "routing_key": "process-image-success",
+      "routing_key": "image-ready-backend",
       "arguments": {}
     },
     {
       "source": "amq.direct",
       "vhost": "/",
-      "destination": "process-image-failure",
+      "destination": "image-ready-socket",
       "destination_type": "queue",
-      "routing_key": "process-image-failure",
+      "routing_key": "image-ready-socket",
       "arguments": {}
     }
   ]

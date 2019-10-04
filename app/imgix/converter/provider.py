@@ -22,4 +22,4 @@ def provide(type, path, options):
     save_path = directory + '/' + os.path.basename(image.filename)
     image.save(save_path)
     print("Converted file saved to {}".format(save_path))
-    return image
+    return save_path

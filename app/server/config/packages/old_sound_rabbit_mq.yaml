@@ -6,10 +6,13 @@ old_sound_rabbit_mq:
         upload_image:
             connection:       default
             exchange_options: { name: 'amq.direct', type: direct }
+        image_processed:
+            connection:       default
+            exchange_options: { name: 'amq.direct', type: direct }
 
-#    consumers:
-#        task:
-#            connection:       default
-#            exchange_options: { name: 'task', type: direct }
-#            queue_options:    { name: 'task'}
-#            callback:         App\Consumer\TaskConsumer
+    consumers:
+        image_ready:
+            connection:       default
+            exchange_options: { name: 'amq.direct', type: direct }
+            queue_options:    { name: 'image-ready-backend'}
+            callback:         Imgix\Consumer\ImageProcessedConsumer

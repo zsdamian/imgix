@@ -6,6 +6,7 @@ services:
         autoconfigure: true
         bind:
             $rabbitProducerUploadImage: '@old_sound_rabbit_mq.upload_image_producer'
+            $rabbitProducerImageProcessed: '@old_sound_rabbit_mq.image_processed_producer'
             $fileHandlerDirectory: '%kernel.project_dir%/../upload/files'
 
     Imgix\:

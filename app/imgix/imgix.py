@@ -1,6 +1,7 @@
 import pika
 import json
 import converter.provider as provider
+import os
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -10,19 +11,21 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
     pika.credentials.PlainCredentials('root', 'root')
 ))
 
-
+channel = connection.channel()
 def consume(channel, method, properties, body):
     print("Received {}".format(body))
     parsedBody = json.loads(body)
-    image = provider.provide(
+    save_path = provider.provide(
         parsedBody['type'],
         parsedBody['file'],
         {} if 'file' not in parsedBody else parsedBody['options']
     )
+    body = json.dumps({
+        "path"  : save_path,
+        "download_token" : parsedBody['token']
+    })
 
-
-
-channel = connection.channel()
+    channel.basic_publish(exchange='amq.direct',routing_key='image-ready-backend', body=body)
 
 
 channel.basic_consume(queue='upload-image',

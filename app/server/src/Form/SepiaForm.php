@@ -21,7 +21,7 @@ class SepiaForm extends AbstractType
                 'required' => true,
             ])
             ->add('power', ChoiceType::class, [
-                'choices' => [0, 1, 2]
+                'choices' => [0, 1, 2, 3 ,4]
             ]);
     }
 

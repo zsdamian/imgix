@@ -11,4 +11,10 @@ export default class Client {
             .then(onSuccess, onFailure);
     }
 
+    downloadFile(id: number, onSuccess: (result: any) => void = null, onFailure: (result: any) => void = null){
+        axios
+            .get("/file/" + id)
+            .then(onSuccess, onFailure);
+    }
+
 }

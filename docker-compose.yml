@@ -31,6 +31,7 @@ services:
     container_name: php
     volumes:
       - ./app/:/home/wwwroot/app
+      - .docker/pm2/:/home/pm2
     depends_on:
       - mysql
       - rabbit
@@ -55,6 +56,25 @@ services:
       - RABBITMQ_NODETYPE=queue-ram
     ports:
       - 15672:15672
+      - 15675:15675
     volumes:
       - .docker/rabbitmq/definitions.json:/opt/definitions.json
       - .docker/rabbitmq/rabbitmq.config:/opt/bitnami/rabbitmq/etc/rabbitmq/rabbitmq.config
+      - .docker/rabbitmq/enabled_plugins:/opt/bitnami/rabbitmq/etc/rabbitmq/enabled_plugins
+
+  node:
+    image: "node:slim"
+    user: "node"
+    container_name: node
+    working_dir: /home/app/socket
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./app/socket/:/home/app/socket
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    command: "npm start"
+    depends_on:
+      - rabbit

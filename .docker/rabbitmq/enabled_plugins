@@ -1,0 +1,5 @@
+[
+    rabbitmq_management,
+    rabbitmq_web_dispatch,
+    rabbitmq_management_agent
+].

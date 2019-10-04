@@ -5,6 +5,8 @@ def convert(path, options):
         0: 20,
         1: 30,
         2: 40,
+        3: 60,
+        4: 80,
     }
     # fetch power from options
     power = power_switcher.get(options['power'] if 'power' in options else 0, 20)

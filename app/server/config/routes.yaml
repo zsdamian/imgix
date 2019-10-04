@@ -4,6 +4,11 @@ index:
     methods: [GET]
     controller: Imgix\Controller\MainController
 
+file:
+    path: /file/{download}
+    methods: [GET]
+    controller: Imgix\Controller\FileController
+
 api_image_sepia:
     path: /api/v1/image/sepia
     methods: [POST]
