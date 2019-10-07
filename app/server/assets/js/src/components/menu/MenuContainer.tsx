@@ -8,10 +8,8 @@ export default class MenuContainer extends React.Component<{}, {}> {
         return (
 
             <section className="row">
-                <MenuItem link={'/sepia'} text={'Sepia'}/>
-                <MenuItem link={'/black-and-white'} text={'Black&White'}/>
-                <MenuItem link={'/fuckery'} text={'Fuckery'}/>
-                <MenuItem link={'/mix'} text={'Mix'}/>
+                <MenuItem link={'/sepia'} text={'Sepia'} image="./image/sepia.jpeg"/>
+                <MenuItem link={'/black-and-white'} text={'Black&White'} image="./image/black_and_white.jpeg"/>
             </section>
         );
     }

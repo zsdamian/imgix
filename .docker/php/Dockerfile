@@ -45,10 +45,7 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 
 RUN echo "dev ALL=(ALL) ALL" > /etc/sudoers
 
-#RUN pm2 start /home/wwwroot/app/imgix/imxig.py
-
 WORKDIR /home/wwwroot/app/server
-##</romaricp>##
 
 EXPOSE 9000
 CMD ["php-fpm"]

@@ -31,7 +31,7 @@ class FileController
 
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'converted.' . explode('.', $filePath)[1]
+            basename($filePath)
         );
         return $response;
     }

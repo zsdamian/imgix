@@ -9,11 +9,14 @@ docker-compose up -d
 echo "Composer"
 docker exec -it php bash -c "composer install"
 
+echo "Wait i while for mysql synchronization..."
+sleep 10
+
 echo "Database schema creation"
 docker exec -it php bash -c "bin/console doctrine:schema:update --force"
 
 echo "Webpack"
-docker exec -it php bash -c "yarn encore dev"
+docker exec -it php bash -c "yarn install && yarn encore dev"
 
 echo "Sockets install"
 docker exec -it php bash -c "cd ../socket && yarn install"

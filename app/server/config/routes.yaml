@@ -14,3 +14,9 @@ api_image_sepia:
     methods: [POST]
     defaults: { any: null }
     controller: Imgix\Controller\API\SepiaController
+
+api_image_black_and_white:
+    path: /api/v1/image/black-and-white
+    methods: [POST]
+    defaults: { any: null }
+    controller: Imgix\Controller\API\BlackAndWhiteController
