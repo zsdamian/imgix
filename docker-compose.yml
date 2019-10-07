@@ -56,7 +56,6 @@ services:
       - RABBITMQ_NODETYPE=queue-ram
     ports:
       - 15672:15672
-      - 15675:15675
     volumes:
       - .docker/rabbitmq/definitions.json:/opt/definitions.json
       - .docker/rabbitmq/rabbitmq.config:/opt/bitnami/rabbitmq/etc/rabbitmq/rabbitmq.config

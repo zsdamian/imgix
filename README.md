@@ -7,4 +7,3 @@
 - global blocking if already waiting
 - error handling (mostly in sockets)
 - frontend refactor
-- python converter interface with validation

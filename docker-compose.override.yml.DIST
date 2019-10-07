@@ -1,0 +1,27 @@
+version: '3'
+services:
+  apache:
+    ports:
+      - 80:80
+
+  mysql:
+    ports:
+      - 3306:33060
+
+  phpmyadmin:
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - 8080:80
+
+  rabbit:
+    ports:
+      - 15672:15672
+      - 5672:5672
+
+  node:
+    ports:
+      - 3000:3000
+    expose:
+      - 3000

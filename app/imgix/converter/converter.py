@@ -114,7 +114,7 @@ class BlackAndWhite(Converter):
 
     def convert(self, image, data):
         if self.mode_switcher[data['mode']]:
-            return image.convert('1')
+            return image.convert('L')
         else:
             return image.convert('1', dither=Image.NONE)
 
